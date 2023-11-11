@@ -1,0 +1,21 @@
+
+.no-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+  }
+  
+  h1 {
+    font-size: 5em;
+    color: #333;
+  }
+  
+  p {
+    font-size: 1.5em;
+    color: #777;
+    text-align: center;
+  }
+  
