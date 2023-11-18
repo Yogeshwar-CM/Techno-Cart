@@ -13,10 +13,10 @@ const Welcome = () => {
       </div>
       <div className="right">
         <h1 className="button-customer">
-          <Link to="/auth">I am a Customer</Link>
+          <Link to="/auth/customer">I am a Customer</Link>
         </h1>
         <h1 className="button-org">
-          <Link to="/auth/org">Organization</Link>
+          <Link to="/auth">Organization</Link>
         </h1>
       </div>
     </div>

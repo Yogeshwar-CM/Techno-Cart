@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Orgauth.css";
+import "./customer-auth.css";
 
-const Orgauth = () => {
+const Customerauth = () => {
   const navigate = useNavigate();
   const api = "http://localhost:3000";
 
   const [isSignUp, setisSignUp] = useState(true);
-  const [shopName, setShopName] = useState("");
-  const [shopOwnerName, setShopOwnerName] = useState("");
-  const [logoImage, setLogoImage] = useState("");
+  const [FullName, setFullName] = useState("");
+  const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSignUp = () => {
@@ -18,18 +17,18 @@ const Orgauth = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       const response = await fetch(
-        isSignUp ? `${api}/shops/register` : `${api}/shops/login`,
+        isSignUp ? `${api}/users/register` : `${api}/users/login`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            name: shopName,
-            shopOwner: shopOwnerName,
-            logoImage: logoImage,
+            FullName: FullName,
+            userName: userName,
             password: password,
           }),
         }
@@ -39,7 +38,7 @@ const Orgauth = () => {
       console.log(data);
 
       if (response.ok) {
-        navigate("/stock");
+        navigate("/home");
       } else {
         console.error("Error:", data.message);
       }
@@ -49,31 +48,29 @@ const Orgauth = () => {
   };
 
   return (
-    <div className="Orgauth">
+    <div className="Customerauth">
       {isSignUp ? (
         <form onSubmit={handleSubmit}>
           <div className="top">
-            <h1>New Shop Owner</h1>
+            <h1>New Customer</h1>
           </div>
           <div className="middle">
-            <p>Shop Name:</p>
+            <p>FullName:</p>
             <input
               type="text"
-              placeholder="Shop Name"
-              name="name"
-              value={shopName}
-              onChange={(e) => setShopName(e.target.value)}
+              placeholder="Your Name"
+              name="FullName"
+              value={FullName}
+              onChange={(e) => setFullName(e.target.value)}
             />
-            <p>Shop Owner Name:</p>
+            <p>UserName:</p>
             <input
               type="text"
-              placeholder="Shop Owner Name"
-              name="shopOwnerName"
-              value={shopOwnerName}
-              onChange={(e) => setShopOwnerName(e.target.value)}
+              placeholder="UserName"
+              name="userName"
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
             />
-            <p>Logo Image:</p>
-            <input type="file" placeholder="Logo Image URL" name="logoImage" />
             <p>Password:</p>
             <input
               type="password"
@@ -95,16 +92,16 @@ const Orgauth = () => {
       ) : (
         <form onSubmit={handleSubmit}>
           <div className="top">
-            <h1>Shop Login</h1>
+            <h1>Customer Login</h1>
           </div>
           <div className="middle">
-            <p>Shop Name:</p>
+            <p>UserName:</p>
             <input
               type="text"
-              placeholder="Shop Name"
-              name="shopOwnerName"
-              value={shopName}
-              onChange={(e) => setShopName(e.target.value)}
+              placeholder="UserName"
+              name="userName"
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
             />
             <p>Password:</p>
             <input
@@ -127,4 +124,4 @@ const Orgauth = () => {
   );
 };
 
-export default Orgauth;
+export default Customerauth;

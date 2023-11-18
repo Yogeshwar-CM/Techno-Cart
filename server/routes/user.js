@@ -2,7 +2,6 @@ const express = require("express");
 const Router = express.Router();
 const User = require("../models/userModel");
 
-// Fetch all users
 Router.post("/", async (req, res) => {
   try {
     const users = await User.find();
@@ -14,15 +13,13 @@ Router.post("/", async (req, res) => {
   }
 });
 
-// Handle a POST request to create a new user
 Router.post("/register", async (req, res) => {
   try {
-    const { userName, password } = req.body;
-    const count = await User.countDocuments();
+    const { FullName, userName, password } = req.body;
     const newUser = new User({
-      userName,
-      password,
-      userID: `user${count + 1}`,
+      fullname: FullName,
+      username: userName,
+      password: password,
     });
     await newUser.save();
     res.json(newUser);
@@ -33,11 +30,10 @@ Router.post("/register", async (req, res) => {
   }
 });
 
-// Handle a POST request to sign in a user
 Router.post("/login", async (req, res) => {
   try {
     const { userName, password } = req.body;
-    const user = await User.findOne({ userName, password });
+    const user = await User.findOne({ username: userName, password: password });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -47,13 +43,12 @@ Router.post("/login", async (req, res) => {
   }
 });
 
-// Handle a POST request to update user information
 Router.post("/update", async (req, res) => {
   try {
-    const { userID, userName, password } = req.body;
+    const { userID, FullName, userName, password } = req.body;
     const updatedUser = await User.findOneAndUpdate(
       { userID },
-      { userName, password },
+      { FullName, userName, password },
       { new: true }
     );
     if (!updatedUser) {

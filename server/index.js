@@ -17,6 +17,9 @@ app.use("/products", productRouter);
 const userRouter = require("./routes/user");
 app.use("/users", userRouter);
 
+const shopRouter = require("./routes/shop");
+app.use("/shops", shopRouter);
+
 const cartRouter = require("./routes/cart");
 app.use("/cart", cartRouter);
 

@@ -8,17 +8,17 @@ import ManageStock from "./Pages/ManageStock";
 import Orgauth from "./Pages/Orgauth";
 import Cart from "./Pages/cart";
 import Nopage from "./Pages/Nopage";
-import Customerauth from "./Pages/customerauth";
+import Customerauth from "./Pages/Customerauth";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Welcome />}></Route>
-        <Route path="/auth" element={<Customerauth />}></Route>
-        <Route path="/auth/org" element={<Orgauth />}></Route>
+        <Route path="/auth" element={<Orgauth />}></Route>
         <Route path="/scan" element={<Scan />}></Route>
         <Route path="/home" element={<CustomerHome />}></Route>
+        <Route path="/auth/customer" element={<Customerauth />}></Route>
         <Route path="/stock" element={<Stock />}></Route>
         <Route path="/cart" element={<Cart />}></Route>
         <Route path="/stock/manage" element={<ManageStock />}></Route>
