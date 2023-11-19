@@ -57,7 +57,7 @@ Router.post("/myprods", async (req, res) => {
 
 Router.post("/getOne", async (req, res) => {
   try {
-    const data = await Product.findOne({ productId: req.body.productId });
+    const data = await Product.findOne({ _id: req.body.productID });
     res.json(data);
   } catch (err) {
     res

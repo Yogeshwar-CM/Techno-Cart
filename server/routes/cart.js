@@ -15,10 +15,35 @@ Router.post("/update", async (req, res) => {
       cart = new Cart({ userID: req.body.id, products: [] });
     }
 
-    console.log(cart);
     const quantity = req.body.quantity;
     const productId = req.body.productID;
-    cart.products.push({ productID: productId, quantity: quantity });
+
+    const productIndex = cart.products.findIndex(
+      (product) => product.productID === productId
+    );
+
+    if (productIndex !== -1) {
+      cart.products[productIndex].quantity = quantity;
+
+      cart.products[productIndex].subTotal =
+        cart.products[productIndex].price *
+        cart.products[productIndex].quantity;
+    } else {
+      const { name, price } = req.body;
+
+      cart.products.push({
+        productID: productId,
+        name: name,
+        price: price,
+        quantity: quantity, 
+        subTotal: price * quantity,
+      });
+    }
+    cart.total = cart.products.reduce(
+      (acc, product) => acc + product.subTotal,
+      0
+    );
+
     await cart.save();
 
     res.status(200).json(cart);
@@ -29,7 +54,6 @@ Router.post("/update", async (req, res) => {
   }
 });
 
-// Delete single element inside Products based on ProductID and quantity
 Router.post("/delete", async (req, res) => {
   try {
     const cart = await Cart.findOne({ userID: req.body.id });
@@ -43,18 +67,13 @@ Router.post("/delete", async (req, res) => {
       throw new Error("Product not found");
     }
 
-    // Remove the product from the cart
-    cart.products.splice(productIndex, 1);
-
-    // If the product quantity is greater than 0, decrease the quantity by 1
     if (quantity > 0) {
       cart.products[productIndex].quantity -= quantity;
     }
-
-    // If the product quantity is 0, remove the product from the cart
-    if (cart.products[productIndex].quantity === 0) {
+    if (cart.products[productIndex].quantity <= 0) {
       cart.products.splice(productIndex, 1);
     }
+
     await cart.save();
 
     res.json(cart);
@@ -66,15 +85,11 @@ Router.post("/delete", async (req, res) => {
   }
 });
 
-// Clear every element inside the Products Object
 Router.post("/clear", async (req, res) => {
   try {
     const cart = await Cart.findOne({ userID: req.body.id });
-
-    // Empty the Products array
     cart.products = [];
 
-    // Save the cart changes
     await cart.save();
 
     res.json(cart);

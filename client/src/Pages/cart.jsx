@@ -4,6 +4,7 @@ import "./cart.css";
 
 const Cart = () => {
   const [products, setProducts] = useState([]);
+  const [totalPrice, settotalPrice] = useState(0);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -17,13 +18,14 @@ const Cart = () => {
           }),
         });
         const cartData = await response.json();
+        settotalPrice(cartData[0].total);
         const productData = cartData[0].products;
-
         setProducts(productData);
       } catch (error) {
-        console.error("Error fetching products:", error);
+        console.error(error);
       }
     };
+    console.log(products)
 
     fetchProduct();
   }, []);
@@ -36,15 +38,16 @@ const Cart = () => {
         <div className="cart-body">
           {products.map((product) => (
             <div key={product.productID} className="set">
-              {/* <span>{product.name}</span> */}
+              <span>{product.name}</span>
               <span>{product.quantity}</span>
-              <span>{product.price}</span>
+              <span>{product.subTotal}</span>
             </div>
           ))}
         </div>
         <div className="cart-foot">
           <button>Clear</button>
           <button>Checkout</button>
+          <p>Total: {totalPrice}</p>
         </div>
       </div>
     </div>

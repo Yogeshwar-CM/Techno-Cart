@@ -7,34 +7,23 @@ const cartSchema = new mongoose.Schema({
   products: [
     {
       productID: String,
+      name: String,
+      price: Number,
       quantity: Number,
+      subTotal: {
+        type: Number,
+        default: function () {
+          return this.price * this.quantity;
+        },
+      },
     },
   ],
-  total: Number,
-});
-
-cartSchema.pre("save", async function (next) {
-  try {
-    const productPrices = await Promise.all(
-      this.products.map(async (product) => {
-        const productDocument = await mongoose.model("Product").findOne({
-          productID: product.productID,
-        });
-        return productDocument ? productDocument.price : 0;
-      })
-    );
-
-    const totalAmount = productPrices.reduce(
-      (acc, price, index) => acc + price * this.products[index].quantity,
-      0
-    );
-
-    this.total = totalAmount;
-
-    next();
-  } catch (error) {
-    next(error);
-  }
+  total: {
+    type: Number,
+    default: function () {
+      return this.products.reduce((acc, product) => acc + product.subTotal, 0);
+    },
+  },
 });
 
 module.exports = mongoose.model("Cart", cartSchema);
