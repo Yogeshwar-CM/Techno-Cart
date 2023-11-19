@@ -21,7 +21,7 @@ Router.post("/update", async (req, res) => {
     cart.products.push({ productID: productId, quantity: quantity });
     await cart.save();
 
-    res.json(cart);
+    res.status(200).json(cart);
   } catch (err) {
     res
       .status(500)

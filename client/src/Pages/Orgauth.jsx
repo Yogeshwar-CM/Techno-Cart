@@ -4,6 +4,9 @@ import "./Orgauth.css";
 
 const Orgauth = () => {
   const navigate = useNavigate();
+  localStorage.removeItem("userID");
+  localStorage.removeItem("name");
+  localStorage.removeItem("HTML5_QRCODE_DATA");
   const api = "http://localhost:3000";
 
   const [isSignUp, setisSignUp] = useState(true);

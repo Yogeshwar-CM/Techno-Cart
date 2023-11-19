@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import "./customer-auth.css";
 
 const Customerauth = () => {
+  localStorage.removeItem("userID");
+  localStorage.removeItem("name");
+  localStorage.removeItem("HTML5_QRCODE_DATA");
   const navigate = useNavigate();
   const api = "http://localhost:3000";
 
@@ -38,6 +41,7 @@ const Customerauth = () => {
       console.log(data);
 
       if (response.ok) {
+        localStorage.setItem("userID", data._id);
         navigate("/home");
       } else {
         console.error("Error:", data.message);

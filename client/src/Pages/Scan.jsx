@@ -8,8 +8,8 @@ const Scan = () => {
   useEffect(() => {
     const scanner = new Html5QrcodeScanner("reader", {
       qrbox: {
-        width: 850,
-        height: 400,
+        width: 900,
+        height: 375,
       },
       fps: 5,
     });
@@ -18,18 +18,18 @@ const Scan = () => {
 
     function scannerSuccess(result) {
       scanner.clear();
-
-      const data = fetch(`${BaseURL}/cart/update`, {
+      const response = fetch(`${BaseURL}/cart/update`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          id: "user1",
+          id: localStorage.getItem("userID"),
           productID: result,
           quantity: 1,
         }),
       });
-
-      navigate("/cart");
+      if (response.statusCode === 200) {
+        navigate("/cart");
+      }
     }
     function scannerFailure(error) {
       console.warn(error);

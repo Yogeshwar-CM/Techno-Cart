@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import "./welcome.css";
 
 const Welcome = () => {
+  localStorage.removeItem("userID");
+  localStorage.removeItem("name");
+  localStorage.removeItem("HTML5_QRCODE_DATA");
   return (
     <div className="welcome">
       <div className="left">

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Scanicon from "../Components/Scanicon";
 import "./cart.css";
-import Shoe from "../assets/shoe.jpg";
 
 const Cart = () => {
   const [products, setProducts] = useState([]);
@@ -14,20 +13,19 @@ const Cart = () => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            id: "user1",
+            id: localStorage.getItem("userID"),
           }),
         });
         const cartData = await response.json();
         const productData = cartData[0].products;
-        console.log(productData);
+
         setProducts(productData);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
     };
-    setTimeout(() => {
-      fetchProduct();
-    }, 100);
+
+    fetchProduct();
   }, []);
 
   return (
@@ -36,11 +34,13 @@ const Cart = () => {
         <Scanicon />
         <h1 className="text-xl">CART</h1>
         <div className="cart-body">
-          <div className="set">
-            <span>Product Name</span>
-            <span>Quantity</span>
-            <span>Price</span>
-          </div>
+          {products.map((product) => (
+            <div key={product.productID} className="set">
+              {/* <span>{product.name}</span> */}
+              <span>{product.quantity}</span>
+              <span>{product.price}</span>
+            </div>
+          ))}
         </div>
         <div className="cart-foot">
           <button>Clear</button>
