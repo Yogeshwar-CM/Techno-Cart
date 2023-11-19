@@ -39,6 +39,7 @@ const Orgauth = () => {
       console.log(data);
 
       if (response.ok) {
+        localStorage.setItem("name", shopName);
         navigate("/stock");
       } else {
         console.error("Error:", data.message);

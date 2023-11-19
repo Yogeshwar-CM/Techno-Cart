@@ -66,4 +66,19 @@ Router.post("/update", async (req, res) => {
   }
 });
 
+Router.post("/getShopInfo", async (req, res) => {
+  try {
+    const name = req.body.name;
+    const shop = await Shop.findOne({ name });
+    if (!shop) {
+      return res.status(404).json({ message: "Shop not found" });
+    }
+    res.json({ shopName: shop.name, shopID: shop._id });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Error getting shop information", error: err.message });
+  }
+});
+
 module.exports = Router;

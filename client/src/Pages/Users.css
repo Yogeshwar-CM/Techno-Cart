@@ -1,0 +1,39 @@
+.users-container {
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 600px;
+  margin-top: 2rem;
+  margin-left: 18rem;
+}
+
+.users-container h2 {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.users-container .user-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.users-container .user-item {
+  border-bottom: 1px solid #ccc;
+  padding: 15px;
+}
+
+.users-container .user-details {
+  display: flex;
+  justify-content: space-between;
+}
+
+.users-container .fullname {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.users-container .username {
+  font-size: 16px;
+  color: #555;
+}

@@ -1,0 +1,93 @@
+.Product .main {
+  margin-left: 18rem;
+  margin-top: 1.2rem;
+}
+.Product .main button {
+  background: rgb(17, 24, 39);
+  border-radius: 5px;
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
+  opacity: 0.9;
+  padding-bottom: 0.4rem;
+  padding-top: 0.4rem;
+  color: #fff;
+}
+.Product .main button:hover {
+  opacity: 1.4;
+  transform: scale(1.025);
+}
+
+.Product {
+  display: flex;
+  height: 100vh;
+}
+
+.Product .main {
+  flex: 1;
+  padding: 20px;
+}
+
+.Product .bar {
+  padding: 10px;
+  background-color: #f0f0f0;
+}
+
+.Product .add-button {
+  background-color: #4caf50;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-button:hover {
+  background-color: #45a049;
+}
+
+.Product .body {
+  margin-top: 20px;
+}
+
+.Product .product-list {
+  list-style: none;
+  padding: 0;
+}
+
+.Product .product-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.Product .product-details {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Product .product-name {
+  font-size: 18px;
+  text-overflow: clip;
+  width: 18rem;
+  font-weight: bold;
+}
+
+.Product .product-price {
+  font-size: 16px;
+  width: 5rem;
+  font-weight: 500;
+  color: #45a049;
+}
+.Product .product-stock {
+  font-size: 16px;
+  width: 8rem;
+}
+.Product .product-details input {
+  height: 2rem;
+}
+.Product .settings-icon {
+  margin-top: 5px;
+  margin-left: 5px;
+  width: 1.6em;
+  cursor: pointer;
+}
