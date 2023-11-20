@@ -7,6 +7,26 @@ Router.post("/", async (req, res) => {
   res.json(cartData);
 });
 
+Router.post("/getUserCart", async (req, res) => {
+  try {
+    const userID = req.body.id;
+    const cart = await Cart.findOne({ userID: userID });
+
+    if (!cart) {
+      return res
+        .status(404)
+        .json({ message: "Cart not found for the user ID" });
+    }
+
+    res.json(cart);
+  } catch (err) {
+    res.status(500).json({
+      message: "Error getting user cart",
+      error: err.message,
+    });
+  }
+});
+
 Router.post("/update", async (req, res) => {
   try {
     let cart = await Cart.findOne({ userID: req.body.id });
@@ -35,7 +55,7 @@ Router.post("/update", async (req, res) => {
         productID: productId,
         name: name,
         price: price,
-        quantity: quantity, 
+        quantity: quantity,
         subTotal: price * quantity,
       });
     }
@@ -89,6 +109,7 @@ Router.post("/clear", async (req, res) => {
   try {
     const cart = await Cart.findOne({ userID: req.body.id });
     cart.products = [];
+    cart.total = 0;
 
     await cart.save();
 

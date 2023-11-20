@@ -5,22 +5,27 @@
   font-family: "roboto";
   justify-content: space-evenly;
 }
+
 .left {
   position: absolute;
   left: 5%;
   top: 35%;
 }
+
 .HERO-1 {
   font-size: 4rem;
 }
+
 .welcome-text {
   font-size: 1.2rem;
 }
+
 .right {
   position: absolute;
   right: 30%;
   top: 35%;
 }
+
 .button-customer,
 .button-org {
   background: #2c2c2c;

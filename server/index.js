@@ -11,6 +11,9 @@ app.get("/", (req, res) => {
   res.send("This is TechnoCart's Server");
 });
 
+const checkoutRouter = require("./routes/checkout");
+app.use("/checkout", checkoutRouter);
+
 const productRouter = require("./routes/products");
 app.use("/products", productRouter);
 
