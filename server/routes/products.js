@@ -1,9 +1,10 @@
 const express = require("express");
 const Router = express.Router();
+const sharp = require("sharp");
 const Product = require("../models/productModel");
-const Shop = require("../models/shopModel");
+const multer = require("multer");
 
-Router.get("/", async (req, res) => {
+Router.post("/", async (req, res) => {
   try {
     const data = await Product.find();
     res.json(data);
@@ -16,8 +17,6 @@ Router.get("/", async (req, res) => {
 
 Router.post("/mystock", async (req, res) => {
   const sID = req.body.shopID;
-  console.log(sID);
-
   try {
     const products = await Product.find({ shopID: sID, stock: { $gt: 0 } });
 
@@ -91,16 +90,27 @@ Router.post("/updateProduct", async (req, res) => {
   }
 });
 
-Router.post("/newProduct", async (req, res) => {
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
+Router.post("/newProduct", upload.single("image"), async (req, res) => {
+  const { name, description, shopID, price, stock, category } = req.body;
+
+  const imageBuffer = req.file.buffer;
+
   try {
+    const compressedImageBuffer = await sharp(imageBuffer)
+      .toFormat("jpeg", { quality: 80 })
+      .toBuffer();
+
     const data = await new Product({
-      name: req.body.name,
-      description: req.body.description,
-      price: req.body.price,
-      stock: req.body.stock,
-      image: req.body.image,
-      category: req.body.category,
-      shopID: req.body.shopID,
+      name,
+      description,
+      price,
+      stock,
+      image: compressedImageBuffer,
+      category,
+      shopID,
     });
 
     await data.save();
@@ -111,6 +121,7 @@ Router.post("/newProduct", async (req, res) => {
       .json({ message: "Error creating product", error: err.message });
   }
 });
+
 Router.post("/restock", async (req, res) => {
   try {
     const { productId, amount } = req.body;

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Bag from "../assets/bag.jpg";
-import Mouse from "../assets/mouse.jpg";
-import Bike from "../assets/bike.jpg";
 import AdminSidebar from "../Components/AdminSidebar";
+import { Buffer } from "buffer";
 
 const Stock = () => {
   const [products, setProducts] = useState([]);
@@ -20,6 +18,7 @@ const Stock = () => {
           name: shopName,
         }),
       });
+
       const data = await response.json();
 
       if (response.ok) {
@@ -65,9 +64,19 @@ const Stock = () => {
       <AdminSidebar />
       <div className="flex flex-wrap left-72 absolute">
         {products.map((product) => (
-          <div className="w-full shadow-2xl shadow-blue-950 max-w-xs mt-4 ml-4 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700">
+          <div
+            key={product._id}
+            className="w-full shadow-2xl shadow-blue-950 max-w-xs mt-4 ml-4 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700"
+          >
             <a href="#">
-              <img className="p-8 rounded-t-lg" src={Bag} alt="product image" />
+              <img
+                className="p-8 rounded-t-lg"
+                src={`data:image/jpeg;base64,${Buffer.from(
+                  product.image.data
+                ).toString("base64")}`}
+                alt="product image"
+                loading="lazy"
+              />
             </a>
             <div className="px-5 pb-5">
               <a href="#">

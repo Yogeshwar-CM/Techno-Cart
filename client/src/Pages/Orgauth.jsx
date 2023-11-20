@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Buffer } from "buffer";
 import "./Orgauth.css";
 
 const Orgauth = () => {
@@ -12,29 +13,44 @@ const Orgauth = () => {
   const [isSignUp, setisSignUp] = useState(true);
   const [shopName, setShopName] = useState("");
   const [shopOwnerName, setShopOwnerName] = useState("");
-  const [logoImage, setLogoImage] = useState("");
+  const [logoImage, setLogoImage] = useState(null); 
   const [password, setPassword] = useState("");
 
   const handleSignUp = () => {
     setisSignUp(!isSignUp);
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      const buffer = Buffer.from(reader.result);
+      setLogoImage(buffer);
+    };
+
+    if (file) {
+      reader.readAsArrayBuffer(file);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const formData = new FormData();
+      formData.append("name", shopName);
+      formData.append("shopOwner", shopOwnerName);
+      formData.append("password", password);
+
+      if (logoImage) {
+        formData.append("logoImage", new Blob([logoImage]));
+      }
+
       const response = await fetch(
         isSignUp ? `${api}/shops/register` : `${api}/shops/login`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: shopName,
-            shopOwner: shopOwnerName,
-            logoImage: logoImage,
-            password: password,
-          }),
+          body: formData,
         }
       );
 
@@ -77,7 +93,12 @@ const Orgauth = () => {
               onChange={(e) => setShopOwnerName(e.target.value)}
             />
             <p>Logo Image:</p>
-            <input type="file" placeholder="Logo Image URL" name="logoImage" />
+            <input
+              type="file"
+              placeholder="Logo Image URL"
+              name="logoImage"
+              onChange={handleImageChange}
+            />
             <p>Password:</p>
             <input
               type="password"

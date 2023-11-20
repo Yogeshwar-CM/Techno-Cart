@@ -39,25 +39,24 @@ const NewProduct = () => {
     e.preventDefault();
     const sID = await getShopID();
 
+    const formData = new FormData();
+    formData.append("name", productName);
+    formData.append("description", description);
+    formData.append("image", image);
+    formData.append("shopID", sID);
+    formData.append("price", price);
+    formData.append("stock", stock);
+    formData.append("category", category);
+
     try {
       const response = await fetch(`${api}/products/newProduct`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: productName,
-          description: description,
-          image: image,
-          shopID: sID,
-          price: price,
-          stock: stock,
-          category: category,
-        }),
+        body: formData,
       });
 
       if (response.ok) {
         const data = await response.json();
+        window.location.reload();
         console.log("Product added successfully:", data);
         window.alert("Product added successfully");
       } else {
@@ -93,7 +92,7 @@ const NewProduct = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="image">Logo</label>
+          <label htmlFor="image">Image</label>
           <input
             type="file"
             id="image"
