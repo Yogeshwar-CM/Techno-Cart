@@ -7,6 +7,7 @@ import Scan from "./Pages/Scan";
 import ManageStock from "./Pages/Analytics";
 import Orgauth from "./Pages/Orgauth";
 import Product from "./Pages/Product";
+import AdminDashboard from "./Pages/Analytics";
 import Cart from "./Pages/cart";
 import Nopage from "./Pages/Nopage";
 import Users from "./Pages/UsersPage";
@@ -18,6 +19,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Welcome />}></Route>
         <Route path="/users" element={<Users />}></Route>
+        <Route path="/dashboard" element={<AdminDashboard />}></Route>
         <Route path="/auth" element={<Orgauth />}></Route>
         <Route path="/scan" element={<Scan />}></Route>
         <Route path="/home" element={<CustomerHome />}></Route>

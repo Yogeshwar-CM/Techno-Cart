@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Buffer } from "buffer";
 import "./Orgauth.css";
 
 const Orgauth = () => {
@@ -13,55 +12,34 @@ const Orgauth = () => {
   const [isSignUp, setisSignUp] = useState(true);
   const [shopName, setShopName] = useState("");
   const [shopOwnerName, setShopOwnerName] = useState("");
-  const [logoImage, setLogoImage] = useState(null); 
   const [password, setPassword] = useState("");
 
   const handleSignUp = () => {
     setisSignUp(!isSignUp);
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-
-    reader.onloadend = () => {
-      const buffer = Buffer.from(reader.result);
-      setLogoImage(buffer);
-    };
-
-    if (file) {
-      reader.readAsArrayBuffer(file);
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const formData = new FormData();
-      formData.append("name", shopName);
-      formData.append("shopOwner", shopOwnerName);
-      formData.append("password", password);
-
-      if (logoImage) {
-        formData.append("logoImage", new Blob([logoImage]));
-      }
-
       const response = await fetch(
         isSignUp ? `${api}/shops/register` : `${api}/shops/login`,
         {
           method: "POST",
-          body: formData,
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify({
+            shopOwner: shopOwnerName,
+            name: shopName,
+            password: password,
+          }),
         }
       );
-
       const data = await response.json();
-      console.log(data);
 
       if (response.ok) {
         localStorage.setItem("name", shopName);
         navigate("/stock");
       } else {
-        console.error("Error:", data.message);
+        console.error("Error:", data);
       }
     } catch (error) {
       console.error("Error:", error.message);
@@ -69,85 +47,61 @@ const Orgauth = () => {
   };
 
   return (
-    <div className="Orgauth">
-      {isSignUp ? (
-        <form onSubmit={handleSubmit}>
-          <div className="top">
-            <h1>New Shop Owner</h1>
-          </div>
-          <div className="middle">
-            <p>Shop Name:</p>
-            <input
-              type="text"
-              placeholder="Shop Name"
-              name="name"
-              value={shopName}
-              onChange={(e) => setShopName(e.target.value)}
-            />
-            <p>Shop Owner Name:</p>
-            <input
-              type="text"
-              placeholder="Shop Owner Name"
-              name="shopOwnerName"
-              value={shopOwnerName}
-              onChange={(e) => setShopOwnerName(e.target.value)}
-            />
-            <p>Logo Image:</p>
-            <input
-              type="file"
-              placeholder="Logo Image URL"
-              name="logoImage"
-              onChange={handleImageChange}
-            />
-            <p>Password:</p>
-            <input
-              type="password"
-              placeholder="Password"
-              name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <div className="bottom">
-            <button type="button" onClick={handleSignUp}>
-              Already have an account?
-            </button>
-            <button type="submit" id="signup">
-              SignUp
-            </button>
-          </div>
-        </form>
-      ) : (
-        <form onSubmit={handleSubmit}>
-          <div className="top">
-            <h1>Shop Login</h1>
-          </div>
-          <div className="middle">
-            <p>Shop Name:</p>
-            <input
-              type="text"
-              placeholder="Shop Name"
-              name="shopOwnerName"
-              value={shopName}
-              onChange={(e) => setShopName(e.target.value)}
-            />
-            <p>Password:</p>
-            <input
-              type="password"
-              placeholder="Password"
-              name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <div className="bottom">
-            <button onClick={handleSignUp}>Don't have an account?</button>
-            <button type="submit" id="login">
-              Login
-            </button>
-          </div>
-        </form>
-      )}
+    <div className="Orgauth bg-gray-100 min-h-screen flex items-center justify-center">
+      <form className="bg-white p-8 rounded shadow-md max-w-md w-full" onSubmit={handleSubmit}>
+        <div className="top text-2xl font-bold mb-4">
+          {isSignUp ? "New Shop Owner" : "Shop Login"}
+        </div>
+        <div className="middle">
+          <p className="text-xl mb-2">Shop Name:</p>
+          <input
+            type="text"
+            placeholder="Shop Name"
+            name="shopName"
+            value={shopName}
+            onChange={(e) => setShopName(e.target.value)}
+            className="w-full mb-4 px-4 py-2 rounded border"
+          />
+          {isSignUp && (
+            <>
+              <p className="text-xl mb-2">Shop Owner:</p>
+              <input
+                type="text"
+                placeholder="Shop Owner Name"
+                name="shopOwnerName"
+                value={shopOwnerName}
+                onChange={(e) => setShopOwnerName(e.target.value)}
+                className="w-full mb-4 px-4 py-2 rounded border"
+              />
+            </>
+          )}
+          <p className="text-xl mb-2">Password:</p>
+          <input
+            type="password"
+            placeholder="Password"
+            name="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full mb-6 px-4 py-2 rounded border"
+          />
+        </div>
+        <div className="bottom flex items-center">
+          <button
+            type="button"
+            onClick={handleSignUp}
+            className="text-sm text-gray-600 hover:underline cursor-pointer mr-4"
+          >
+            {isSignUp ? "Already have an account?" : "Don't have an account?"}
+          </button>
+          <button
+            type="submit"
+            id={isSignUp ? "signup" : "login"}
+            className="text-white bg-gray-800 px-4 py-2 rounded cursor-pointer"
+          >
+            {isSignUp ? "SignUp" : "Login"}
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

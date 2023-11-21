@@ -1,39 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Buffer } from "buffer";
 
 const AdminSidebar = () => {
-  const [shopLogo, setShopLogo] = useState(null);
   const shopName = localStorage.getItem("name");
-  const baseUrl = "http://localhost:3000";
-
-  useEffect(() => {
-    const fetchShopData = async () => {
-      try {
-        const response = await fetch(`${baseUrl}/shops/getShopInfo`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: shopName,
-          }),
-        });
-
-        const data = await response.json();
-        if (response.ok) {
-          console.log("Shop Logo Data:", data.shopLogo);
-          setShopLogo(data.shopLogo);
-        } else {
-          console.error("Error:", data.message);
-        }
-      } catch (error) {
-        console.error("Error:", error.message);
-      }
-    };
-
-    fetchShopData();
-  }, [shopName]);
   return (
     <div>
       <button
@@ -65,21 +34,9 @@ const AdminSidebar = () => {
         aria-label="Sidebar"
       >
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
-          <a className="flex items-center pl-2.5 mb-5">
-            {shopLogo && (
-              <img
-                src={`data:image/jpg;base64,${btoa(
-                  String.fromCharCode.apply(null, new Uint8Array(shopLogo))
-                )}`}
-                className="h-6 mr-3 sm:h-7"
-                alt="Shop Logo"
-                loading="lazy"
-              />
-            )}
-            <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-              {shopName}
-            </span>
-          </a>
+          <div className=" text-xl font-bold text-white mb-4 ml-4">
+            {shopName}
+          </div>
           <ul className="space-y-2 font-medium">
             <li>
               <a
