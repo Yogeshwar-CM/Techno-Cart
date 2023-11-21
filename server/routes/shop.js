@@ -1,7 +1,5 @@
 const express = require("express");
 const Router = express.Router();
-const sharp = require("sharp");
-const multer = require("multer");
 const Shop = require("../models/shopModel");
 
 Router.post("/", async (req, res) => {
@@ -14,29 +12,23 @@ Router.post("/", async (req, res) => {
       .json({ message: "Error getting shops", error: err.message });
   }
 });
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
 
-Router.post("/register", upload.single("logoImage"), async (req, res) => {
-  const { name, shopOwner, password } = req.body;
-
-  const logoImageBuffer = req.file.buffer;
+Router.post("/register", async (req, res) => {
+  const name = req.body.name;
+  const shopOwner = req.body.shopOwner;
+  const password = req.body.password;
 
   try {
-    const resizedLogoImageBuffer = await sharp(logoImageBuffer)
-      .resize({ width: 100, height: 100 })
-      .toFormat("jpeg", { quality: 80 })
-      .toBuffer();
-
     const newShop = new Shop({
       name: name,
       shopOwner: shopOwner,
       password: password,
-      logoImage: resizedLogoImageBuffer,
     });
 
     await newShop.save();
-    res.json(newShop);
+    res
+      .status(200)
+      .json({ message: "Shop registered successfully", data: newShop });
   } catch (err) {
     res
       .status(500)
@@ -62,10 +54,10 @@ Router.post("/login", async (req, res) => {
 
 Router.post("/update", async (req, res) => {
   try {
-    const { shopID, name, shopOwner, logoImage, password } = req.body;
+    const { shopID, name, shopOwner, password } = req.body;
     const updatedShop = await Shop.findOneAndUpdate(
       { _id: shopID },
-      { name, shopOwner, logoImage, password },
+      { name, shopOwner, password },
       { new: true }
     );
     if (!updatedShop) {
@@ -86,7 +78,7 @@ Router.post("/getShopInfo", async (req, res) => {
     if (!shop) {
       return res.status(404).json({ message: "Shop not found" });
     }
-    res.json({ shopName: shop.name, shopID: shop._id, shopLogo: shop.logoImage});
+    res.json({ shopName: shop.name, shopID: shop._id });
   } catch (err) {
     res
       .status(500)

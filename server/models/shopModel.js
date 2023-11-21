@@ -6,9 +6,6 @@ const shopSchema = new mongoose.Schema({
     required: true,
   },
   shopOwner: String,
-  logoImage: {
-    type: String,
-  },
   password: String
 });
 

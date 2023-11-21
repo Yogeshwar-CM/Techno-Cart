@@ -4,7 +4,7 @@ const Cart = require("../models/cartModel");
 const Checkout = require("../models/checkoutModel");
 const Product = require("../models/productModel");
 
-Router.post("/", async (req, res) => {
+Router.get("/", async (req, res) => {
   try {
     const checkouts = await Checkout.find();
     res.json(checkouts);
