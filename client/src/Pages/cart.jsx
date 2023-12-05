@@ -133,7 +133,7 @@ const Cart = () => {
               : 0)
         );
         doc.text(
-          `Total: $${cartData.checkout.totalAmount || 0}`,
+          `Total: Rs.${cartData.checkout.totalAmount || 0}`,
           80,
           50 +
             (cartData.checkout.products

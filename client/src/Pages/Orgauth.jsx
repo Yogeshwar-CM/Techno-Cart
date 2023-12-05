@@ -9,7 +9,7 @@ const Orgauth = () => {
   localStorage.removeItem("HTML5_QRCODE_DATA");
   const api = "http://localhost:3000";
 
-  const [isSignUp, setisSignUp] = useState(true);
+  const [isSignUp, setisSignUp] = useState(false);
   const [shopName, setShopName] = useState("");
   const [shopOwnerName, setShopOwnerName] = useState("");
   const [password, setPassword] = useState("");

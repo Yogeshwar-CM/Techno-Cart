@@ -20,6 +20,7 @@ const Scan = () => {
     async function scannerSuccess(result) {
       try {
         const userID = localStorage.getItem("userID");
+        scanner.clear();
         const productResponse = await fetch(`${BaseURL}/products/getOne`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -27,37 +28,37 @@ const Scan = () => {
             productID: result,
           }),
         });
-
+        
         if (!productResponse.ok) {
           console.error(
             `Failed to fetch product details: ${productResponse.statusText}`
-          );
-          return;
-        }
-        const productData = await productResponse.json();
-        console.log(productData);
-        const { name, price } = productData;
-        console.log(name);
-
-        const cartResponse = await fetch(`${BaseURL}/cart/update`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            id: userID,
-            productID: result,
-            name: name,
-            price: price,
-            quantity: 1,
-          }),
-        });
+            );
+            return;
+          }
+          const productData = await productResponse.json();
+          console.log(productData);
+          const { name, price } = productData;
+          console.log(name);
+          
+          const cartResponse = await fetch(`${BaseURL}/cart/update`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              id: userID,
+              productID: result,
+              name: name,
+              price: price,
+              quantity: 1,
+            }),
+          });
+          console.log(cartResponse.json());
+          navigate("/cart");
 
         if (!cartResponse.ok) {
           console.error(`Failed to update cart: ${cartResponse.statusText}`);
           return;
         }
 
-        scanner.clear();
-        navigate("/cart");
       } catch (error) {
         console.error("Error processing scan:", error.message);
       }

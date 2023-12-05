@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import AdminSidebar from "../Components/AdminSidebar"
+import AdminSidebar from "../Components/AdminSidebar";
 
-export const AdminDashboard = () => {
+const AdminDashboard = () => {
   const [checkoutHistory, setCheckoutHistory] = useState([]);
 
   useEffect(() => {
@@ -30,10 +30,6 @@ export const AdminDashboard = () => {
           <ul>
             {checkoutHistory.map((checkout, index) => (
               <li key={index} className="border-b py-2">
-                <p className="text-lg font-semibold mb-1">
-                  {checkout.productName}
-                </p>
-                <p className="text-gray-600">Quantity: {checkout.quantity}</p>
                 <p className="text-gray-600">
                   Total Price: ${checkout.totalAmount}
                 </p>
@@ -48,3 +44,5 @@ export const AdminDashboard = () => {
     </div>
   );
 };
+
+export default AdminDashboard;
