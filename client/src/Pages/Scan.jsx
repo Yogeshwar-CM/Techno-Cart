@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import  React,{ useEffect } from "react";
 import { Html5QrcodeScanner } from "html5-qrcode";
 import { useNavigate } from "react-router-dom";
 
@@ -74,9 +74,11 @@ const Scan = () => {
   }, []);
 
   return (
-    <div>
-      <h1>QR Code Scanner</h1>
-      <div id="reader"></div>
+    <div className=" bg-[#FFF4F4] mx-auto px-4 flex flex-col justify-center items-center h-screen">
+    <div className="bg-[#2c2c2c] rounded-md p-6">
+      <h1 className="text-lg font-semibold text-center md:text-4xl pb-6 text-[#FFF4F4] px-3">QR Code Scanner</h1>
+      <div id="reader" className="rounded-lg border-none cursor-pointer p-2 flex justify-center items-center flex-col h-[300px] bg-[#FFF4F4]"></div>
+    </div>
     </div>
   );
 };
