@@ -129,7 +129,7 @@ const Customerauth = () => {
       {isSignUp ? (
         <form
           onSubmit={handleSubmit}
-          className="bg-white w-[480px] h-[900px] rounded-[5px] box-shadow flex flex-col items-center py-4 px-8"
+          className="bg-white md:w-[480px] md:h-[900px] sm:w-full sm:h-full rounded-[5px] box-shadow md:flex md:flex-col md:items-center md:justify-normal sm:flex sm:flex-col sm:items-center sm:justify-center py-4 px-8"
         >
           <div className="mb-[1.2rem]">
             <h1 className="font-bold text-[2rem] mb-[1.2rem]">New Customer</h1>
@@ -183,7 +183,7 @@ const Customerauth = () => {
       ) : (
         <form
           onSubmit={handleSubmit}
-          className="bg-white w-[480px] h-[900px] rounded-[5px] box-shadow flex flex-col items-center py-4 px-8"
+          className="bg-white md:w-[480px] md:h-[900px] sm:w-full sm:h-full rounded-[5px] box-shadow md:flex md:flex-col md:items-center md:justify-center lg:justify-normal sm:flex sm:flex-col sm:items-center sm:justify-center py-4 px-8"
         >
           <div className="mb-[1.2rem]">
             <h1 className="font-bold text-[2rem] mb-[1.2rem]">
