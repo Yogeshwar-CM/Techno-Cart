@@ -9,7 +9,6 @@ const Customerauth = () => {
   localStorage.removeItem("HTML5_QRCODE_DATA");
   const navigate = useNavigate();
   const api = "http://localhost:3000";
-
   const [isSignUp, setisSignUp] = useState(true);
   const [FullName, setFullName] = useState("");
   const [userName, setUserName] = useState("");
