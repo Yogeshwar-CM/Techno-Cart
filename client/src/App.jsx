@@ -15,7 +15,6 @@ import Users from "./Pages/UsersPage";
 import Customerauth from "./Pages/Customerauth";
 
 const App = () => {
-  console.log("test");
   return (
     <BrowserRouter>
       <Routes>
