@@ -45,7 +45,7 @@ const AdminDashboard = () => {
     <div className="w-[100vw] h-[100vh] bg-[#f1f1f1]">
       <AdminSidebar />
       <div className="w-full h-full flex items-center justify-center">
-        <div className="max-w-2xl w-full bg-white p-8 rounded shadow-md">
+        <div className="lg:max-w-2xl lg:w-full sm:w-full bg-white p-8 rounded shadow-md">
           <h1 className="text-3xl font-bold mb-6">Checkout History</h1>
 
           {checkoutHistory.length === 0 ? (
