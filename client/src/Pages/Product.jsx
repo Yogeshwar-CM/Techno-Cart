@@ -186,7 +186,7 @@ const Product = () => {
     <div className="w-[100vw] h-[100vh] flex">
       <AdminSidebar />
       <div className="w-full h-full flex flex-col items-center justify-start p-3">
-        <div className="bg-[#f0f0f0] p-3 w-1/2">
+        <div className="bg-[#f0f0f0] p-3 lg:w-1/2">
           <button
             className="bg-[#111827] text-white px-3 py-2 rounded-[5px]"
             onClick={() => {
