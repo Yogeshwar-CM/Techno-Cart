@@ -119,12 +119,76 @@ const Product = () => {
   }, [baseUrl, shopName]);
 
   return (
-    <div className="Product">
+    // <div className="Product">
+    //   <AdminSidebar />
+    //   <div className="main">
+    //     <div className="bar">
+    //       <button
+    //         className="add-button"
+    //         onClick={() => {
+    //           setnewprodState(!newprodState);
+    //           setnewprodText(newprodState ? "New Product" : "Close Window");
+    //         }}
+    //       >
+    //         {newprodText}
+    //       </button>
+    //     </div>
+    //     <div className="body">
+    //       {newprodState ? <NewProduct /> : null}
+    //       <ul className="product-list">
+    //         {products.map((product) => (
+    //           <li key={product._id} className="product-item">
+    //             <div className="product-details">
+    //               <span>
+    //                 <svg
+    //                   className="w-6 h-6 text-gray-800 ml-2 mt-1 cursor-pointer"
+    //                   aria-hidden="true"
+    //                   xmlns="http://www.w3.org/2000/svg"
+    //                   fill="none"
+    //                   viewBox="0 0 16 18"
+    //                   onClick={() => downloadBarcode(product._id)}
+    //                 >
+    //                   <path
+    //                     stroke="currentColor"
+    //                     stroke-linecap="round"
+    //                     stroke-linejoin="round"
+    //                     stroke-width="2"
+    //                     d="M8 1v11m0 0 4-4m-4 4L4 8m11 4v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3"
+    //                   />
+    //                 </svg>
+    //               </span>
+    //               <span className="product-name">{product.name}</span>
+    //               <span className="product-price">Rs.{product.price}</span>
+    //               <span className="product-stock">
+    //                 In Stock: {product.stock}
+    //               </span>
+    //               <span>
+    //                 <input
+    //                   type="number"
+    //                   placeholder="  Amount"
+    //                   onChange={(e) => setRestockAmount(e.target.value)}
+    //                 ></input>
+    //               </span>
+    //               <span>
+    //                 <button
+    //                   onClick={() => handleRestock(product._id, RestockAmount)}
+    //                 >
+    //                   Add Stock
+    //                 </button>
+    //               </span>
+    //             </div>
+    //           </li>
+    //         ))}
+    //       </ul>
+    //     </div>
+    //   </div>
+    // </div>
+    <div className="w-[100vw] h-[100vh] flex">
       <AdminSidebar />
-      <div className="main">
-        <div className="bar">
+      <div className="w-full h-full flex flex-col items-center justify-start p-3">
+        <div className="bg-[#f0f0f0] p-3 lg:w-1/2">
           <button
-            className="add-button"
+            className="bg-[#111827] text-white px-3 py-2 rounded-[5px]"
             onClick={() => {
               setnewprodState(!newprodState);
               setnewprodText(newprodState ? "New Product" : "Close Window");
